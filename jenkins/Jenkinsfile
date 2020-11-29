@@ -1,13 +1,14 @@
 pipeline {
     agent any
 
+    def hostsFile = readYaml file: '../ansiable/hosts.yml'
+
+    def hosts = hostsFile.raspberry.hosts
+
     parameters {
         choice(
             name: 'TARGET',
-            choices: [
-                'Foo',
-                'Bar'
-            ],
+            choices: hosts,
             description: 'Target'
         )
     }
