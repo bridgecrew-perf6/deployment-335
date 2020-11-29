@@ -24,8 +24,8 @@ pipeline {
 
         stage('Setup') {
             input {
-                message "Target",
-                parameters {
+                message: "Target",
+                parameters: {
                     name: 'TARGET',
                     choices: [
                         'Foo',
