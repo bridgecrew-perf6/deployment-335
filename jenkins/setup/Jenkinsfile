@@ -26,7 +26,7 @@ pipeline {
                 checkout scm: [
                     $class: 'GitSCM',
                     branches: scm.branches,
-                    doGenerateSuboduleConfigurations: false,
+                    doGenerateSubmoduleConfigurations: false,
                     extensions: [[
                         $class: 'SubmoduleOption',
                         disableSubmodules: false,
@@ -41,15 +41,10 @@ pipeline {
             }
         }
 
-        stage('Generate SSH Keys') {
-            steps {
-                sh "ansible-playbook ansible/playbooks/copy_ssh_key/copy_ssh_key.yml --ask-pass"
-            }
-        }
         stage('Transfer Public SSH Key') {
             steps {
                 echo 'Building..'
-                echo "Hello ${params.IP} ${params.USERNAME} ${params.PASSWORD}"
+                sh "sshpass -p ${params.PASSWORD} ssh-copy-id -i ~/.ssh/id_rsa.pub ${params.USERNAME}@${params.IP}"
             }
         }
         stage('Test') {
