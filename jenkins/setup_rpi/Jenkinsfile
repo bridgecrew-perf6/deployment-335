@@ -11,11 +11,18 @@ pipeline {
             description: 'Target IP'
         )
         string(
+            name: 'NAME',
+            description: 'Raspberry Pi Name',
+            defaultValue: 'rp0x'
+        )
+        string(
             name: 'USERNAME',
+            defaultValue: 'pi',
             description: 'SSH Username'
         )
         password(
             name: 'PASSWORD',
+            defaultValue: 'raspberry',
             description: 'SSH Password'
         )
     }
@@ -43,18 +50,13 @@ pipeline {
 
         stage('Transfer Public SSH Key') {
             steps {
-                echo 'Building..'
                 sh "sshpass -p ${params.PASSWORD} ssh-copy-id -i ~/.ssh/id_rsa.pub ${params.USERNAME}@${params.IP}"
             }
         }
-        stage('Test') {
+        stage('Add Raspberry to Ansible Host') {
             steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying..'
+                sh "/home/pi/.local/bin/yaml_cli -f ansible/hosts.yml -s raspberry:hosts:${params.NAME}:ansible_host ${params.IP}"
+                sh "/home/pi/.local/bin/yaml_cli -f ansible/hosts.yml -s raspberry:hosts:${params.NAME}:ansible_user ${params.USERNAME}"
             }
         }
     }
