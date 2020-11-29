@@ -43,7 +43,7 @@ pipeline {
 
         stage('Generate SSH Keys') {
             steps {
-                sh "ansible-playbook ../ansible/playbooks/copy_ssh_key/copy_ssh_key.yml --ask-pass"
+                sh "ansible-playbook ansible/playbooks/copy_ssh_key/copy_ssh_key.yml --ask-pass"
             }
         }
         stage('Transfer Public SSH Key') {
