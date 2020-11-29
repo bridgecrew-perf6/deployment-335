@@ -9,11 +9,11 @@ pipeline {
         string(
             name: 'IP',
             description: 'Target IP'
-        ),
+        )
         string(
             name: 'USERNAME',
             description: 'SSH Username'
-        ),
+        )
         password: (
             name: 'PASSWORD',
             description: 'SSH Password'
