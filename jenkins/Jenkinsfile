@@ -1,6 +1,4 @@
-def hostsFile = readYaml file: '../ansible/hosts.yml'
-
-def hosts = hostsFile.raspbery.hosts
+def hosts = [ 'rpi01', 'rpi02' ]
 
 pipeline {
     agent any
