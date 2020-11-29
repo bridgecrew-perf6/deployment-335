@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+
+    environment {
+        ANSIBLE_CONFIG = "../../ansible/ansible.cfg"
+    }
+
+    parameters {
+        string(
+            name: 'IP',
+            description: 'Target IP'
+        ),
+        string(
+            name: 'USERNAME',
+            description: 'SSH Username'
+        ),
+        password: (
+            name: 'PASSWORD',
+            description: 'SSH Password'
+        )
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm: [
+                    $class: 'GitSCM',
+                    branches: scm.branches,
+                    doGenerateSuboduleConfigurations: false,
+                    extensions: [[
+                        $class: 'SubmoduleOption',
+                        disableSubmodules: false,
+                        parentCredentials: false,
+                        recursiveSubmodules: true,
+                        reference: '',
+                        trackingSubmodules: false
+                    ]],
+                    submoduleCfg: [],
+                    userRemoteConfigs: scm.userRemoteConfigs
+                ]
+            }
+        }
+
+        stage('Generate SSH Keys') {
+            steps {
+                sh "ansible-playbook ../../ansible/copy_ssh_key/copy_ssh_key.yml --ask-pass"
+            }
+        }
+        stage('Transfer Public SSH Key') {
+            steps {
+                echo 'Building..'
+                echo "Hello ${TARGET}"
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying..'
+            }
+        }
+    }
+}
