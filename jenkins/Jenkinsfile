@@ -1,10 +1,9 @@
+def hostsFile = readYaml file: '../ansible/hosts.yml'
+
+def hosts = hostsFile.raspbery.hosts
+
 pipeline {
     agent any
-
-    script {
-        hostsFile = readYaml file: '../ansiable/hosts.yml'
-        hosts = hostsFile.raspberry.hosts
-    }
 
     parameters {
         choice(
