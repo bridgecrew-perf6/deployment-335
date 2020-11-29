@@ -1,0 +1,17 @@
+---
+- hosts: all
+  tasks:
+    - name: Create Directory
+      file:
+        path: "/home/pi/.ssh"
+        state: directory
+
+    - name: Create Empty File
+      file:
+        path: "/home/pi/.ssh/authorized_keys"
+        state: touch
+
+    - name: Add Public Key
+      lineinfile:
+        path: "/home/pi/.ssh/authorized_keys"
+        line: "{{ public_key }}"
