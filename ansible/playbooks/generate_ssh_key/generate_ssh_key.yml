@@ -1,0 +1,15 @@
+---
+- hosts: raspberry
+  
+  become: true
+  vars_files:
+    - vars/default.yaml
+
+  tasks:
+    - name: Generate SSH Key
+      openssh_keypair:
+        path: "~/.ssh/{{ ssh_key_filename }}"
+        type: rsa
+        size: 4096
+        state: present
+        force: no
