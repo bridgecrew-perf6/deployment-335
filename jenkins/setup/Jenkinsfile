@@ -49,7 +49,7 @@ pipeline {
         stage('Transfer Public SSH Key') {
             steps {
                 echo 'Building..'
-                echo "Hello ${TARGET}"
+                echo "Hello ${params.IP} ${params.USERNAME} ${params.PASSWORD}"
             }
         }
         stage('Test') {
