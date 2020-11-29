@@ -24,15 +24,15 @@ pipeline {
 
         stage('Setup') {
             input {
-                message: "Target",
-                parameters: {
-                    name: 'TARGET',
-                    choices: [
+                message "Target",
+                parameters {
+                    name 'TARGET',
+                    choices [
                         'Foo',
                         'Bar'
                     ],
-                    $class: 'ChoiceParameterDefinition',
-                    description: 'Target'
+                    $class 'ChoiceParameterDefinition',
+                    description 'Target'
                 }
             }
         }
