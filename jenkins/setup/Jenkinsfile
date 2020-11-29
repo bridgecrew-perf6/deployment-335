@@ -14,7 +14,7 @@ pipeline {
             name: 'USERNAME',
             description: 'SSH Username'
         )
-        password: (
+        password(
             name: 'PASSWORD',
             description: 'SSH Password'
         )
